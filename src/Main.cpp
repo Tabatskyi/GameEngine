@@ -1,11 +1,14 @@
 #include <SDL2/SDL.h>
-#include <stdio.h>
+#include <glm/trigonometric.hpp>
+#include <iostream>
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 
 int main(int argc, char* argv[])
 {
+	std::cout << "cos(60 degrees) = " << glm::cos(glm::radians(60.0f)) << std::endl;
+
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
         printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -22,7 +25,7 @@ int main(int argc, char* argv[])
 
     if (window == NULL)
     {
-        printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
+		std::cout << "Window could not be created! SDL_Error: " << SDL_GetError() << std::endl;
         SDL_Quit();
         return 1;
     }
@@ -30,7 +33,7 @@ int main(int argc, char* argv[])
     SDL_Surface* screenSurface = SDL_GetWindowSurface(window);
     if (screenSurface == NULL)
     {
-        printf("Could not get window surface! SDL_Error: %s\n", SDL_GetError());
+		std::cout << "Could not get window surface! SDL_Error: " << SDL_GetError() << std::endl;
         SDL_DestroyWindow(window);
         SDL_Quit();
         return 1;
