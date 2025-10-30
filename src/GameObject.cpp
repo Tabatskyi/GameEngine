@@ -10,6 +10,18 @@ GameObject::~GameObject()
 	ClearTexture();
 }
 
+bool GameObject::altRenderEnabled = false;
+
+void GameObject::SetAltRenderEnabled(bool enabled)
+{
+	altRenderEnabled = enabled;
+}
+
+bool GameObject::IsAltRenderEnabled()
+{
+	return altRenderEnabled;
+}
+
 void GameObject::SetVelocity(float vx, float vy)
 {
 	velX = vx; velY = vy;
@@ -73,10 +85,21 @@ void GameObject::Update(Uint32 deltaMs, const Uint8*, int screenW, int screenH)
 
 void GameObject::Render(SDL_Renderer* renderer) const
 {
+	if (!altRenderEnabled)
+	{
+		if (texture)
+		{
+			SDL_RenderCopy(renderer, texture, nullptr, &rect);
+			return;
+		}
+		SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+		SDL_RenderFillRect(renderer, &rect);
+		return;
+	}
+
 	if (texture)
 	{
 		SDL_RenderCopy(renderer, texture, nullptr, &rect);
-		return;
 	}
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderFillRect(renderer, &rect);

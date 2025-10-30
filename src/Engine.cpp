@@ -1,4 +1,5 @@
 #include "Engine.hpp"
+#include "GameObject.hpp"
 
 Engine::Engine(unsigned int width, unsigned int height) : width(width), height(height) {}
 
@@ -73,6 +74,10 @@ void Engine::Run(Scene& scene)
 				else if (event.key.keysym.sym == SDLK_p && event.key.repeat == 0)
 				{
 					manualPaused = !manualPaused;
+				}
+				else if (event.key.keysym.sym == SDLK_m && event.key.repeat == 0)
+				{
+					GameObject::SetAltRenderEnabled(!GameObject::IsAltRenderEnabled());
 				}
 			}
 			else if (event.type == SDL_WINDOWEVENT)

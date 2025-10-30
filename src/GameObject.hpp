@@ -32,6 +32,9 @@ public:
 	virtual void Update(Uint32 deltaMs, const Uint8* keyboard, int screenWidth, int screenHeight);
 	virtual void Render(SDL_Renderer* renderer) const;
 
+	static void SetAltRenderEnabled(bool enabled);
+	static bool IsAltRenderEnabled();
+
 protected:
 	SDL_Rect rect {};
 	Color color {};
@@ -43,4 +46,6 @@ protected:
 
 	SDL_Texture* texture = nullptr;
 	bool ownsTexture = false;
+
+	static bool altRenderEnabled;
 };

@@ -1,15 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Entities">
-      <UniqueIdentifier>{944962fa-a989-4b60-99a7-f8e1ff95afc1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Executable">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
     <Filter Include="Engine">
       <UniqueIdentifier>{48ca0109-6581-435a-a0f9-b280165b1a16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{fd713c49-85ee-49f1-973a-3063b2116983}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{944962fa-a989-4b60-99a7-f8e1ff95afc1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -19,17 +22,17 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Engine.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Engine</Filter>
+      <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="TextureUtils.cpp">
-      <Filter>Executable</Filter>
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -40,11 +43,13 @@
       <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.hpp">
-      <Filter>Engine</Filter>
+      <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Player.hpp">
-      <Filter>Engine</Filter>
+      <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="TextureUtils.hpp" />
+    <ClInclude Include="TextureUtils.hpp">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
