@@ -28,6 +28,9 @@
     <ClCompile Include="Player.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="TextureUtils.cpp">
+      <Filter>Executable</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.hpp">
@@ -42,5 +45,6 @@
     <ClInclude Include="Player.hpp">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="TextureUtils.hpp" />
   </ItemGroup>
 </Project>

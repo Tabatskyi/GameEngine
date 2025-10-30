@@ -109,7 +109,7 @@ void Engine::Run(Scene& scene)
 		bool draggingOrResizing = (lastWindowEventTime != 0) && (currentTime - lastWindowEventTime < 100);
 		bool simPaused = manualPaused || autoPaused || !windowActive || draggingOrResizing;
 
-		SDL_SetRenderDrawColor(renderer,0xFF,0xFF,0xFF,0xFF);
+		SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 		SDL_RenderClear(renderer);
 
 		if (!simPaused)

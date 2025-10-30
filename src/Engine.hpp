@@ -14,6 +14,8 @@ public:
 	void Shutdown();
 	void Run(Scene& scene);
 
+	SDL_Renderer* GetRenderer() const { return renderer; }
+
 private:
 	unsigned int width = 800;
 	unsigned int height = 600;
