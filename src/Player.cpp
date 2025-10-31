@@ -1,5 +1,4 @@
 #include "Player.hpp"
-#include <cmath>
 #include <algorithm>
 
 void Player::Update(Uint32 deltaMs, int screenWidth, int screenHeight, const Uint8* keyboardState)

@@ -26,29 +26,20 @@ void GameObject::SetVelocity(double vx, double vy)
 	velX = vx; velY = vy;
 }
 
-void GameObject::SetTexture(SDL_Texture* tex)
+void GameObject::SetTexture(std::shared_ptr<SDL_Texture> tex)
 {
-	ClearTexture();
-	texture = tex;
-	ownsTexture = false;
+	texture = std::move(tex);
 }
 
 bool GameObject::InitTexture(SDL_Renderer* renderer, const std::string& path, int width, int height, int cell, SDL_Color color1, SDL_Color color2)
 {
-	ClearTexture();
 	texture = LoadTexture(renderer, path, width, height, cell, color1, color2);
-	ownsTexture = texture != nullptr;
 	return texture != nullptr;
 }
 
 void GameObject::ClearTexture()
 {
-	if (ownsTexture && texture)
-	{
-		SDL_DestroyTexture(texture);
-	}
-	texture = nullptr;
-	ownsTexture = false;
+	texture.reset();
 }
 
 void GameObject::Update(Uint32 deltaMs, int screenW, int screenH, const Uint8* keyboard)
@@ -86,7 +77,7 @@ void GameObject::Render(SDL_Renderer* renderer) const
 {
 	if (texture)
 	{
-		SDL_RenderCopy(renderer, texture, nullptr, &rect);
+		SDL_RenderCopy(renderer, texture.get(), nullptr, &rect);
 		if (!altRenderEnabled)
 			return;
 	}

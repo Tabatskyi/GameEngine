@@ -1,6 +1,5 @@
-#include "Engine.hpp"
-#include <algorithm>
 #include <iostream>
+#include "Engine.hpp"
 #include "Player.hpp"
 #include "TextureUtils.hpp"
 

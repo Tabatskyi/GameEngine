@@ -1,27 +1,30 @@
 #include "TextureUtils.hpp"
 
-SDL_Texture* LoadTextureBMP(SDL_Renderer* renderer, const std::string& path)
+std::shared_ptr<SDL_Texture> LoadTextureBMP(SDL_Renderer* renderer, const std::string& path)
 {
 	SDL_Surface* surface = SDL_LoadBMP(path.c_str());
-	if (!surface) return nullptr;
+	if (!surface) 
+		return {};
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 	SDL_FreeSurface(surface);
-	if (texture) SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
-	return texture;
+	if (!texture) 
+		return {};
+	SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
+	return std::shared_ptr<SDL_Texture>(texture, SDL_DestroyTexture);
 }
 
-SDL_Texture* CreateCheckerTexture(SDL_Renderer* renderer, int width, int height, SDL_Color color1, SDL_Color color2, int cell)
+std::shared_ptr<SDL_Texture> CreateCheckerTexture(SDL_Renderer* renderer, int width, int height, SDL_Color color1, SDL_Color color2, int cell)
 {
 	SDL_Texture* texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, width, height);
-	if (!texture) 
-		return nullptr;
+	if (!texture)
+		return {};
 
-	void* pixels = nullptr; 
+	void* pixels = nullptr;
 	int pitch = 0;
-	if (SDL_LockTexture(texture, nullptr, &pixels, &pitch) !=0)
+	if (SDL_LockTexture(texture, nullptr, &pixels, &pitch) != 0)
 	{
 		SDL_DestroyTexture(texture);
-		return nullptr;
+		return {};
 	}
 	SDL_PixelFormat* format = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA8888);
 	Uint32 col1 = SDL_MapRGBA(format, color1.r, color1.g, color1.b, color1.a);
@@ -40,13 +43,12 @@ SDL_Texture* CreateCheckerTexture(SDL_Renderer* renderer, int width, int height,
 	SDL_UnlockTexture(texture);
 	SDL_FreeFormat(format);
 	SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
-	return texture;
+	return std::shared_ptr<SDL_Texture>(texture, SDL_DestroyTexture);
 }
 
-SDL_Texture* LoadTexture(SDL_Renderer* renderer, const std::string& path, int width, int height, int cell, SDL_Color color1, SDL_Color color2)
+std::shared_ptr<SDL_Texture> LoadTexture(SDL_Renderer* renderer, const std::string& path, int width, int height, int cell, SDL_Color color1, SDL_Color color2)
 {
-	SDL_Texture* texture = LoadTextureBMP(renderer, path);
-	if (texture) 
+	if (std::shared_ptr<SDL_Texture> texture = LoadTextureBMP(renderer, path))
 		return texture;
 	return CreateCheckerTexture(renderer, width, height, color1, color2, cell);
 }
