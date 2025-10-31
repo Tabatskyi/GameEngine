@@ -5,8 +5,8 @@
 class Player : public GameObject
 {
 public:
-	Player(int x, int y, int w, int h, Color color, float speed = 1.0f)
+	Player(int x, int y, int w, int h, Color color, double speed = 1.0f)
 		: GameObject(x, y, w, h, color, speed) {}
 
-	void Update(Uint32 deltaMs, const Uint8* keyboardState, int screenWidth, int screenHeight) override;
+	void Update(Uint32 deltaMs, int screenWidth, int screenHeight, const Uint8* keyboard = nullptr) override;
 };

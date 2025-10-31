@@ -14,7 +14,7 @@ void Scene::Update(Uint32 deltaMs, const Uint8* keyboardState, int screenWidth, 
 {
 	for (std::unique_ptr<GameObject>& object : objects)
 	{
-		object->Update(deltaMs, keyboardState, screenWidth, screenHeight);
+		object->Update(deltaMs, screenWidth, screenHeight, keyboardState);
 	}
 }
 

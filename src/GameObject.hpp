@@ -15,21 +15,20 @@ struct Color
 class GameObject
 {
 public:
-	GameObject(int x, int y, int w, int h, Color color, float speed = 1.0f);
+	GameObject(int x, int y, int w, int h, Color color, double speed = 1.0);
 	virtual ~GameObject();
 
-	void SetVelocity(float vx, float vy);
+	void SetVelocity(double vx, double vy);
 
 	void SetTexture(SDL_Texture* texture);
 	SDL_Texture* GetTexture() const { return texture; }
 
-	bool InitTexture(SDL_Renderer* renderer, const std::string& path,
-		int width, int height, int cell,
+	bool InitTexture(SDL_Renderer* renderer, const std::string& path, int width, int height, int cell,
 		SDL_Color color1 = SDL_Color{255, 0, 255, 255}, SDL_Color color2 = SDL_Color{0, 0, 0, 255});
 
 	void ClearTexture();
 
-	virtual void Update(Uint32 deltaMs, const Uint8* keyboard, int screenWidth, int screenHeight);
+	virtual void Update(Uint32 deltaMs, int screenWidth, int screenHeight, const Uint8* keyboard = nullptr);
 	virtual void Render(SDL_Renderer* renderer) const;
 
 	static void SetAltRenderEnabled(bool enabled);
@@ -38,11 +37,11 @@ public:
 protected:
 	SDL_Rect rect {};
 	Color color {};
-	float posX = 0.0f;
-	float posY = 0.0f;
-	float speed = 1.0f;
-	float velX = 0.0f;
-	float velY = 0.0f;
+	double posX = 0.0;
+	double posY = 0.0;
+	double speed = 1.0;
+	double velX = 0.0;
+	double velY = 0.0;
 
 	SDL_Texture* texture = nullptr;
 	bool ownsTexture = false;

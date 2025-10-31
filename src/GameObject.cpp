@@ -1,9 +1,8 @@
 #include "GameObject.hpp"
-#include <algorithm>
-#include <utility>
 #include "TextureUtils.hpp"
 
-GameObject::GameObject(int x, int y, int w, int h, Color color, float speed) : rect{ x, y, w, h }, color(color), posX(static_cast<float>(x)), posY(static_cast<float>(y)), speed(speed) {}
+GameObject::GameObject(int x, int y, int w, int h, Color color, double speed) 
+	: rect{ x, y, w, h }, color(color), posX(static_cast<double>(x)), posY(static_cast<double>(y)), speed(speed) {}
 
 GameObject::~GameObject()
 {
@@ -22,7 +21,7 @@ bool GameObject::IsAltRenderEnabled()
 	return altRenderEnabled;
 }
 
-void GameObject::SetVelocity(float vx, float vy)
+void GameObject::SetVelocity(double vx, double vy)
 {
 	velX = vx; velY = vy;
 }
@@ -52,54 +51,44 @@ void GameObject::ClearTexture()
 	ownsTexture = false;
 }
 
-void GameObject::Update(Uint32 deltaMs, const Uint8*, int screenW, int screenH)
+void GameObject::Update(Uint32 deltaMs, int screenW, int screenH, const Uint8* keyboard)
 {
-	posX += velX * speed * static_cast<float>(deltaMs);
-	posY += velY * speed * static_cast<float>(deltaMs);
-	if (posX < 0.0f)
+	posX += velX * speed * static_cast<double>(deltaMs);
+	posY += velY * speed * static_cast<double>(deltaMs);
+	if (posX < 0.0)
 	{
-		posX = 0.0f;
-		velX = std::fabs(velX);
+		posX = 0.0;
+		velX = std::abs(velX);
 	}
 	else if (posX > (screenW - rect.w))
 	{
-		posX = static_cast<float>(screenW - rect.w);
-		velX = -std::fabs(velX);
+		posX = static_cast<double>(screenW - rect.w);
+		velX = -std::abs(velX);
 	}
 	if (posY < 0.0f)
 	{
 		posY = 0.0f;
-		velY = std::fabs(velY);
+		velY = std::abs(velY);
 	}
 	else if (posY > (screenH - rect.h))
 	{
-		posY = static_cast<float>(screenH - rect.h);
-		velY = -std::fabs(velY);
+		posY = static_cast<double>(screenH - rect.h);
+		velY = -std::abs(velY);
 	}
 
-	posX = std::max(0.0f, std::min(static_cast<float>(screenW - rect.w), posX));
-	posY = std::max(0.0f, std::min(static_cast<float>(screenH - rect.h), posY));
-	rect.x = static_cast<int>(posX);
-	rect.y = static_cast<int>(posY);
+	posX = std::max(0.0, std::min(static_cast<double>(screenW - rect.w), posX));
+	posY = std::max(0.0, std::min(static_cast<double>(screenH - rect.h), posY));
+	rect.x = static_cast<int>(std::lround(posX));
+	rect.y = static_cast<int>(std::lround(posY));
 }
 
 void GameObject::Render(SDL_Renderer* renderer) const
 {
-	if (!altRenderEnabled)
-	{
-		if (texture)
-		{
-			SDL_RenderCopy(renderer, texture, nullptr, &rect);
-			return;
-		}
-		SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-		SDL_RenderFillRect(renderer, &rect);
-		return;
-	}
-
 	if (texture)
 	{
 		SDL_RenderCopy(renderer, texture, nullptr, &rect);
+		if (!altRenderEnabled)
+			return;
 	}
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderFillRect(renderer, &rect);
