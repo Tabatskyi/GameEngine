@@ -35,10 +35,10 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="CollisionResolver.cpp">
-      <Filter>Executable</Filter>
+      <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
-      <Filter>Executable</Filter>
+      <Filter>Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -57,8 +57,14 @@
     <ClInclude Include="TextureUtils.hpp">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionResolver.hpp" />
-    <ClInclude Include="Wall.hpp" />
-    <ClInclude Include="Enemy.hpp" />
+    <ClInclude Include="Enemy.hpp">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Wall.hpp">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionResolver.hpp">
+      <Filter>Engine</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

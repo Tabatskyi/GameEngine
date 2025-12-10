@@ -20,8 +20,19 @@ GameObject* Scene::GetPlayer() const
 	return player;
 }
 
+void Scene::TriggerGameOver(GameObject* killerEnemy)
+{
+	gameOver = true;
+	gameOverEnemy = killerEnemy;
+}
+
 void Scene::Update(Uint32 deltaMs, const Uint8* keyboardState, int screenWidth, int screenHeight)
 {
+	if (gameOver)
+	{
+		return;
+	}
+
 	for (std::unique_ptr<GameObject>& object : objects)
 	{
 		object->Update(deltaMs, screenWidth, screenHeight, keyboardState);
@@ -34,6 +45,17 @@ void Scene::Update(Uint32 deltaMs, const Uint8* keyboardState, int screenWidth, 
 
 void Scene::Render(SDL_Renderer* renderer) const
 {
+	if (gameOver && gameOverEnemy && gameOverEnemy->GetTexture())
+	{
+		int screenWidth = 0;
+		int screenHeight = 0;
+		SDL_GetRendererOutputSize(renderer, &screenWidth, &screenHeight);
+		
+		SDL_Rect fullScreenRect = { 0, 0, screenWidth, screenHeight };
+		SDL_RenderCopy(renderer, gameOverEnemy->GetTexture().get(), nullptr, &fullScreenRect);
+		return;
+	}
+
 	for (const std::unique_ptr<GameObject>& object : objects)
 	{
 		object->Render(renderer);

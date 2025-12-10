@@ -1,6 +1,4 @@
 #include "Player.hpp"
-#include <algorithm>
-#include <iostream>
 
 void Player::Update(Uint32 deltaMs, int screenWidth, int screenHeight, const Uint8* keyboardState)
 {
@@ -29,7 +27,11 @@ void Player::Update(Uint32 deltaMs, int screenWidth, int screenHeight, const Uin
 	rect.y = static_cast<int>(std::lround(posY));
 }
 
-void Player::OnCollision(GameObject&)
+void Player::OnCollision(GameObject& other)
 {
-	std::cout << "Player collided with an object." << std::endl;
+	Enemy* enemy = dynamic_cast<Enemy*>(&other);
+	if (enemy && scene)
+	{
+		scene->TriggerGameOver(enemy);
+	}
 }

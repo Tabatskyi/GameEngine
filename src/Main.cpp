@@ -30,6 +30,7 @@ int main(int argc, char* argv[])
 	std::unique_ptr<Player> player = std::make_unique<Player>(startX, startY, side, side, Color(0xFF, 0x00, 0x00), 0.25f);
 	player->InitTexture(renderer, "../assets/cat.bmp", side, side, std::max(4, side / 8));
 	Player* playerPtr = player.get();
+	player->SetScene(&scene);
 	scene.Add(std::move(player));
 	scene.SetPlayer(playerPtr);
 

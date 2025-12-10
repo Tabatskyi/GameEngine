@@ -1,5 +1,4 @@
 #include "Engine.hpp"
-#include "GameObject.hpp"
 
 Engine::Engine(unsigned int width, unsigned int height) : width(width), height(height) {}
 

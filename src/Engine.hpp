@@ -3,6 +3,7 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 #include "Scene.hpp"
+#include "GameObject.hpp"
 
 class Engine
 {
@@ -15,6 +16,8 @@ public:
 	void Run(Scene& scene);
 
 	SDL_Renderer* GetRenderer() const { return renderer; }
+	unsigned int GetWidth() const { return width; }
+	unsigned int GetHeight() const { return height; }
 
 private:
 	unsigned int width = 800;

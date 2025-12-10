@@ -21,6 +21,9 @@ public:
 	
 	void SetPlayer(GameObject* playerObject);
 	GameObject* GetPlayer() const;
+	
+	void TriggerGameOver(GameObject* killerEnemy);
+	bool IsGameOver() const { return gameOver; }
 
 private:
 	void RebuildBroadPhasePairs();
@@ -31,4 +34,6 @@ private:
 	std::vector<std::pair<GameObject*, GameObject*>> narrowPhasePairs;
 	CollisionResolver collisionResolver;
 	GameObject* player = nullptr;
+	GameObject* gameOverEnemy = nullptr;
+	bool gameOver = false;
 };

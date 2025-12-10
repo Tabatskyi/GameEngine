@@ -1,7 +1,4 @@
 #include "Enemy.hpp"
-#include <cmath>
-#include <algorithm>
-#include <iostream>
 
 Enemy::Enemy(int x, int y, int w, int h, Color color, double speed) : GameObject(x, y, w, h, color, speed) {}
 
@@ -39,9 +36,4 @@ void Enemy::Update(Uint32 deltaMs, int screenWidth, int screenHeight, const Uint
 void Enemy::SetTarget(GameObject* newTarget)
 {
 	target = newTarget;
-}
-
-void Enemy::OnCollision(GameObject& other)
-{
-	std::cout << "Enemy hit something!" << std::endl;
 }

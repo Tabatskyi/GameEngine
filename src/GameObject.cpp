@@ -1,5 +1,4 @@
 #include "GameObject.hpp"
-#include "TextureUtils.hpp"
 
 GameObject::GameObject(int x, int y, int w, int h, Color color, double speed)
 	: rect{ x, y, w, h }, color(color), posX(static_cast<double>(x)), posY(static_cast<double>(y)), speed(speed) {}

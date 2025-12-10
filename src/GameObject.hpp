@@ -4,6 +4,7 @@
 #include <cmath>
 #include <memory>
 #include <string>
+#include "TextureUtils.hpp"
 
 struct Color
 {
