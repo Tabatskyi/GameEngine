@@ -22,6 +22,7 @@ public:
 
 	void SetTexture(std::shared_ptr<SDL_Texture> texture);
 	std::shared_ptr<SDL_Texture> GetTexture() const { return texture; }
+	const SDL_Rect& GetRect() const { return rect; }
 
 	bool InitTexture(SDL_Renderer* renderer, const std::string& path, int width, int height, int cell,
 		SDL_Color color1 = SDL_Color{255,0,255,255}, SDL_Color color2 = SDL_Color{0,0,0,255});
