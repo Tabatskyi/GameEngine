@@ -60,6 +60,14 @@ void CollisionResolver::ResolvePair(GameObject* first, GameObject* second)
 		return;
 	}
 
+	bool firstStatic = first->IsStatic();
+	bool secondStatic = second->IsStatic();
+
+	if (firstStatic && secondStatic)
+	{
+		return;
+	}
+
 	const SDL_Rect& a = first->GetRect();
 	const SDL_Rect& b = second->GetRect();
 
@@ -76,39 +84,75 @@ void CollisionResolver::ResolvePair(GameObject* first, GameObject* second)
 		return;
 	}
 
-	double pushX = static_cast<double>(overlapX) / 2.0;
-	double pushY = static_cast<double>(overlapY) / 2.0;
+	double pushX, pushY;
+
+	if (firstStatic || secondStatic)
+	{
+		pushX = static_cast<double>(overlapX);
+		pushY = static_cast<double>(overlapY);
+	}
+	else
+	{
+		pushX = static_cast<double>(overlapX) / 2.0;
+		pushY = static_cast<double>(overlapY) / 2.0;
+	}
 
 	if (overlapX < overlapY)
 	{
 		if (a.x < b.x)
 		{
-			first->OffsetPosition(-pushX, 0.0);
-			second->OffsetPosition(pushX, 0.0);
+			if (!firstStatic)
+			{
+				first->OffsetPosition(-pushX, 0.0);
+				first->SetVelocity(-first->GetVelX(), first->GetVelY());
+			}
+			if (!secondStatic)
+			{
+				second->OffsetPosition(pushX, 0.0);
+				second->SetVelocity(-second->GetVelX(), second->GetVelY());
+			}
 		}
 		else
 		{
-			first->OffsetPosition(pushX, 0.0);
-			second->OffsetPosition(-pushX, 0.0);
+			if (!firstStatic)
+			{
+				first->OffsetPosition(pushX, 0.0);
+				first->SetVelocity(-first->GetVelX(), first->GetVelY());
+			}
+			if (!secondStatic)
+			{
+				second->OffsetPosition(-pushX, 0.0);
+				second->SetVelocity(-second->GetVelX(), second->GetVelY());
+			}
 		}
-
-		first->SetVelocity(-first->GetVelX(), first->GetVelY());
-		second->SetVelocity(-second->GetVelX(), second->GetVelY());
 	}
 	else
 	{
 		if (a.y < b.y)
 		{
-			first->OffsetPosition(0.0, -pushY);
-			second->OffsetPosition(0.0, pushY);
+			if (!firstStatic)
+			{
+				first->OffsetPosition(0.0, -pushY);
+				first->SetVelocity(first->GetVelX(), -first->GetVelY());
+			}
+			if (!secondStatic)
+			{
+				second->OffsetPosition(0.0, pushY);
+				second->SetVelocity(second->GetVelX(), -second->GetVelY());
+			}
 		}
 		else
 		{
-			first->OffsetPosition(0.0, pushY);
-			second->OffsetPosition(0.0, -pushY);
+			if (!firstStatic)
+			{
+				first->OffsetPosition(0.0, pushY);
+				first->SetVelocity(first->GetVelX(), -first->GetVelY());
+			}
+			if (!secondStatic)
+			{
+				second->OffsetPosition(0.0, -pushY);
+				second->SetVelocity(second->GetVelX(), -second->GetVelY());
+			}
 		}
-
-		first->SetVelocity(first->GetVelX(), -first->GetVelY());
-		second->SetVelocity(second->GetVelX(), -second->GetVelY());
 	}
 }

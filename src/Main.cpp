@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Engine.hpp"
 #include "Player.hpp"
+#include "Wall.hpp"
 #include "TextureUtils.hpp"
 
 constexpr const unsigned int SCREEN_WIDTH = 800;
@@ -43,6 +44,12 @@ int main(int argc, char* argv[])
 	enemy3->SetVelocity(0.11f, -0.06f);
 	enemy3->InitTexture(renderer, "../assets/scp-67.bmp", side, side, std::max(4, side / 8));
 	scene.Add(std::move(enemy3));
+
+	std::unique_ptr<Wall> wall1 = std::make_unique<Wall>(300, 200, 200, 30, Color(0x80, 0x80, 0x80));
+	scene.Add(std::move(wall1));
+
+	std::unique_ptr<Wall> wall2 = std::make_unique<Wall>(350, 400, 30, 100, Color(0x60, 0x60, 0x60));
+	scene.Add(std::move(wall2));
 
 	engine.Run(scene);
 

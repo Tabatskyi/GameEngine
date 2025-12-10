@@ -36,6 +36,7 @@ public:
 	virtual void Update(Uint32 deltaMs, int screenWidth, int screenHeight, const Uint8* keyboard = nullptr);
 	virtual void Render(SDL_Renderer* renderer) const;
 	virtual void OnCollision(GameObject& other);
+	virtual bool IsStatic() const { return false; }
 
 	static void SetAltRenderEnabled(bool enabled);
 	static bool IsAltRenderEnabled();
