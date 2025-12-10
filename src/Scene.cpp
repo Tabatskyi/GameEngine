@@ -1,5 +1,4 @@
 #include "Scene.hpp"
-#include <algorithm>
 
 void Scene::Add(const GameObject& object)
 {
@@ -19,6 +18,8 @@ void Scene::Update(Uint32 deltaMs, const Uint8* keyboardState, int screenWidth, 
 	}
 	RebuildBroadPhasePairs();
 	RebuildNarrowPhasePairs();
+	collisionResolver.Resolve(narrowPhasePairs);
+	DispatchCollisionEvents();
 }
 
 void Scene::Render(SDL_Renderer* renderer) const
@@ -39,12 +40,16 @@ const std::vector<std::pair<GameObject*, GameObject*>>& Scene::GetNarrowPhasePai
 	return narrowPhasePairs;
 }
 
+const std::vector<CollisionEvent>& Scene::GetCollisionEvents() const
+{
+	return collisionResolver.GetEvents();
+}
+
 void Scene::RebuildBroadPhasePairs()
 {
 	broadPhasePairs.clear();
 	if (objects.size() < 2)
 	{
-		narrowPhasePairs.clear();
 		return;
 	}
 
@@ -71,12 +76,13 @@ void Scene::RebuildBroadPhasePairs()
 	active.reserve(entries.size());
 	for (const SweepEntry& entry : entries)
 	{
+		active.erase(std::remove_if(active.begin(), active.end(), [&entry](const SweepEntry& candidate)
+		{
+			return candidate.maxX <= entry.minX;
+		}), active.end());
+
 		for (const SweepEntry& candidate : active)
 		{
-			if (candidate.maxX <= entry.minX) 
-			{
-				active.erase(std::remove(active.begin(), active.end(), candidate), active.end());
-			}
 			if (!(candidate.maxY <= entry.minY || entry.maxY <= candidate.minY))
 			{
 				broadPhasePairs.emplace_back(candidate.object, entry.object);
@@ -90,6 +96,11 @@ void Scene::RebuildBroadPhasePairs()
 void Scene::RebuildNarrowPhasePairs()
 {
 	narrowPhasePairs.clear();
+	if (broadPhasePairs.empty())
+	{
+		return;
+	}
+
 	for (const std::pair<GameObject*, GameObject*>& pair : broadPhasePairs)
 	{
 		GameObject* lhs = pair.first;
@@ -104,6 +115,24 @@ void Scene::RebuildNarrowPhasePairs()
 		if (!(a.x + a.w <= b.x || b.x + b.w <= a.x || a.y + a.h <= b.y || b.y + b.h <= a.y))
 		{
 			narrowPhasePairs.emplace_back(lhs, rhs);
+		}
+	}
+}
+
+void Scene::DispatchCollisionEvents()
+{
+	const std::vector<CollisionEvent>& events = collisionResolver.GetEvents();
+	for (const CollisionEvent& event : events)
+	{
+		if (!event.first || !event.second)
+		{
+			continue;
+		}
+
+		if (event.type == CollisionEventType::Enter)
+		{
+			event.first->OnCollision(*event.second);
+			event.second->OnCollision(*event.first);
 		}
 	}
 }

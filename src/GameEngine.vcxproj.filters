@@ -34,6 +34,9 @@
     <ClCompile Include="TextureUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionResolver.cpp">
+      <Filter>Executable</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.hpp">
@@ -51,5 +54,6 @@
     <ClInclude Include="TextureUtils.hpp">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionResolver.hpp" />
   </ItemGroup>
 </Project>

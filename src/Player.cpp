@@ -1,5 +1,6 @@
 #include "Player.hpp"
 #include <algorithm>
+#include <iostream>
 
 void Player::Update(Uint32 deltaMs, int screenWidth, int screenHeight, const Uint8* keyboardState)
 {
@@ -26,4 +27,9 @@ void Player::Update(Uint32 deltaMs, int screenWidth, int screenHeight, const Uin
 	posY = std::max(0.0, std::min(static_cast<double>(screenHeight - rect.h), posY));
 	rect.x = static_cast<int>(std::lround(posX));
 	rect.y = static_cast<int>(std::lround(posY));
+}
+
+void Player::OnCollision(GameObject&)
+{
+	std::cout << "Player collided with an object." << std::endl;
 }

@@ -1,7 +1,7 @@
 #include "GameObject.hpp"
 #include "TextureUtils.hpp"
 
-GameObject::GameObject(int x, int y, int w, int h, Color color, double speed) 
+GameObject::GameObject(int x, int y, int w, int h, Color color, double speed)
 	: rect{ x, y, w, h }, color(color), posX(static_cast<double>(x)), posY(static_cast<double>(y)), speed(speed) {}
 
 GameObject::~GameObject()
@@ -40,6 +40,14 @@ bool GameObject::InitTexture(SDL_Renderer* renderer, const std::string& path, in
 void GameObject::ClearTexture()
 {
 	texture.reset();
+}
+
+void GameObject::OffsetPosition(double dx, double dy)
+{
+	posX += dx;
+	posY += dy;
+	rect.x = static_cast<int>(std::lround(posX));
+	rect.y = static_cast<int>(std::lround(posY));
 }
 
 void GameObject::Update(Uint32 deltaMs, int screenW, int screenH, const Uint8* keyboard)
@@ -83,4 +91,8 @@ void GameObject::Render(SDL_Renderer* renderer) const
 	}
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderFillRect(renderer, &rect);
+}
+
+void GameObject::OnCollision(GameObject&)
+{
 }

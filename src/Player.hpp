@@ -9,4 +9,5 @@ public:
 		: GameObject(x, y, w, h, color, speed) {}
 
 	void Update(Uint32 deltaMs, int screenWidth, int screenHeight, const Uint8* keyboard = nullptr) override;
+	void OnCollision(GameObject& other) override;
 };
