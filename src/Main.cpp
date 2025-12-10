@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Engine.hpp"
 #include "Player.hpp"
+#include "Enemy.hpp"
 #include "Wall.hpp"
 #include "TextureUtils.hpp"
 
@@ -28,27 +29,19 @@ int main(int argc, char* argv[])
 
 	std::unique_ptr<Player> player = std::make_unique<Player>(startX, startY, side, side, Color(0xFF, 0x00, 0x00), 0.25f);
 	player->InitTexture(renderer, "../assets/cat.bmp", side, side, std::max(4, side / 8));
+	Player* playerPtr = player.get();
 	scene.Add(std::move(player));
+	scene.SetPlayer(playerPtr);
 
-	std::unique_ptr<GameObject> enemy1 = std::make_unique<GameObject>(50, 50, side, side, Color(0x00, 0x80, 0xFF), 0.15f);
-	enemy1->SetVelocity(0.10f, 0.07f);
-	enemy1->InitTexture(renderer, "../assets/scp-67.bmp", side, side, std::max(4, side / 8));
-	scene.Add(std::move(enemy1));
-
-	std::unique_ptr<GameObject> enemy2 = std::make_unique<GameObject>(700, 100, side, side, Color(0x00, 0xCC, 0x66), 0.20f);
-	enemy2->SetVelocity(-0.08f, 0.12f);
-	enemy2->InitTexture(renderer, "../assets/scp-67.bmp", side, side, std::max(4, side / 8));
-	scene.Add(std::move(enemy2));
-
-	std::unique_ptr<GameObject> enemy3 = std::make_unique<GameObject>(100, 450, side, side, Color(0xFF, 0xA5, 0x00), 0.18f);
-	enemy3->SetVelocity(0.11f, -0.06f);
-	enemy3->InitTexture(renderer, "../assets/scp-67.bmp", side, side, std::max(4, side / 8));
-	scene.Add(std::move(enemy3));
+	std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(50, 50, side, side, Color(0x00, 0x80, 0xFF), 0.15f);
+	enemy->SetTarget(playerPtr);
+	enemy->InitTexture(renderer, "../assets/scp-67.bmp", side, side, std::max(4, side / 8));
+	scene.Add(std::move(enemy));
 
 	std::unique_ptr<Wall> wall1 = std::make_unique<Wall>(300, 200, 200, 30, Color(0x80, 0x80, 0x80));
 	scene.Add(std::move(wall1));
 
-	std::unique_ptr<Wall> wall2 = std::make_unique<Wall>(350, 400, 30, 100, Color(0x60, 0x60, 0x60));
+	std::unique_ptr<Wall> wall2 = std::make_unique<Wall>(350, 400, 30, 150, Color(0x60, 0x60, 0x60));
 	scene.Add(std::move(wall2));
 
 	engine.Run(scene);

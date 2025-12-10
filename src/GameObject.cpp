@@ -50,37 +50,6 @@ void GameObject::OffsetPosition(double dx, double dy)
 	rect.y = static_cast<int>(std::lround(posY));
 }
 
-void GameObject::Update(Uint32 deltaMs, int screenW, int screenH, const Uint8* keyboard)
-{
-	posX += velX * speed * static_cast<double>(deltaMs);
-	posY += velY * speed * static_cast<double>(deltaMs);
-	if (posX < 0.0)
-	{
-		posX = 0.0;
-		velX = std::abs(velX);
-	}
-	else if (posX > (screenW - rect.w))
-	{
-		posX = static_cast<double>(screenW - rect.w);
-		velX = -std::abs(velX);
-	}
-	if (posY < 0.0f)
-	{
-		posY = 0.0f;
-		velY = std::abs(velY);
-	}
-	else if (posY > (screenH - rect.h))
-	{
-		posY = static_cast<double>(screenH - rect.h);
-		velY = -std::abs(velY);
-	}
-
-	posX = std::max(0.0, std::min(static_cast<double>(screenW - rect.w), posX));
-	posY = std::max(0.0, std::min(static_cast<double>(screenH - rect.h), posY));
-	rect.x = static_cast<int>(std::lround(posX));
-	rect.y = static_cast<int>(std::lround(posY));
-}
-
 void GameObject::Render(SDL_Renderer* renderer) const
 {
 	if (texture)
@@ -91,8 +60,4 @@ void GameObject::Render(SDL_Renderer* renderer) const
 	}
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderFillRect(renderer, &rect);
-}
-
-void GameObject::OnCollision(GameObject&)
-{
 }

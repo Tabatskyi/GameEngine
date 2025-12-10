@@ -37,6 +37,9 @@
     <ClCompile Include="CollisionResolver.cpp">
       <Filter>Executable</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Executable</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.hpp">
@@ -56,5 +59,6 @@
     </ClInclude>
     <ClInclude Include="CollisionResolver.hpp" />
     <ClInclude Include="Wall.hpp" />
+    <ClInclude Include="Enemy.hpp" />
   </ItemGroup>
 </Project>

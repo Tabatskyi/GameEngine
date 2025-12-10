@@ -10,4 +10,6 @@ public:
 	void Update(Uint32 deltaMs, int screenWidth, int screenHeight, const Uint8* keyboard = nullptr) override {}
 	
 	bool IsStatic() const override { return true; }
+
+	void OnCollision(GameObject& other) override {}
 };

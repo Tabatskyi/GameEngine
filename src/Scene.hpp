@@ -18,6 +18,9 @@ public:
 	const std::vector<std::pair<GameObject*, GameObject*>>& GetBroadPhasePairs() const;
 	const std::vector<std::pair<GameObject*, GameObject*>>& GetNarrowPhasePairs() const;
 	const std::vector<CollisionEvent>& GetCollisionEvents() const;
+	
+	void SetPlayer(GameObject* playerObject);
+	GameObject* GetPlayer() const;
 
 private:
 	void RebuildBroadPhasePairs();
@@ -27,4 +30,5 @@ private:
 	std::vector<std::pair<GameObject*, GameObject*>> broadPhasePairs;
 	std::vector<std::pair<GameObject*, GameObject*>> narrowPhasePairs;
 	CollisionResolver collisionResolver;
+	GameObject* player = nullptr;
 };
