@@ -40,6 +40,9 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Ball.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.hpp">
@@ -65,6 +68,9 @@
     </ClInclude>
     <ClInclude Include="CollisionResolver.hpp">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Ball.hpp">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

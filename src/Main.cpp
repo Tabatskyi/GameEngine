@@ -3,6 +3,7 @@
 #include "Player.hpp"
 #include "Enemy.hpp"
 #include "Wall.hpp"
+#include "Ball.hpp"
 #include "TextureUtils.hpp"
 
 constexpr const unsigned int SCREEN_WIDTH = 800;
@@ -24,8 +25,8 @@ int main(int argc, char* argv[])
 	Scene scene;
 
 	int side = std::min(SCREEN_WIDTH, SCREEN_HEIGHT) / 10;
-	int startX = SCREEN_WIDTH / 2 - side / 2;
-	int startY = SCREEN_HEIGHT / 2 - side / 2;
+	int startX = SCREEN_WIDTH / 2 - side / 2 + 100;
+	int startY = SCREEN_HEIGHT / 2 - side / 2 + 100;
 
 	std::unique_ptr<Player> player = std::make_unique<Player>(startX, startY, side, side, Color(0xFF, 0x00, 0x00), 0.25f);
 	player->InitTexture(renderer, "../assets/cat.bmp", side, side, std::max(4, side / 8));
@@ -44,6 +45,10 @@ int main(int argc, char* argv[])
 
 	std::unique_ptr<Wall> wall2 = std::make_unique<Wall>(350, 400, 30, 150, Color(0x60, 0x60, 0x60));
 	scene.Add(std::move(wall2));
+
+	std::unique_ptr<Ball> ball = std::make_unique<Ball>(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, side / 2, Color(0xFF, 0xFF, 0x00), 0.2);
+	ball->InitTexture(renderer, "../assets/ball.bmp", side / 2, side / 2, std::max(4, side / 16));
+	scene.Add(std::move(ball));
 
 	engine.Run(scene);
 
